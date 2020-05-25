@@ -25,11 +25,7 @@ String is written to file.
 User message done.  
 */
 var team = [];
-var notdone = false;
-var protoObj ={};
-var manageObj = {};
-var engineerObj = {};
-var internObj = {};
+
 var aManager = {}
 
 var htmlhead  = fs.readFileSync('./dist/head.txt', "utf8");
@@ -145,22 +141,23 @@ const promptIntern = function(){
 }
 
 const paint = function(){
-    console.log ( team);
+    //console.log ( team);
     let card = '';
     var thestring = htmlhead;
     for (i=0;i<team.length;i++){
         card += '<div class= "card" style = "width: 25%"><div class="card-header"> <h1>' + team[i].name +'</h1>';
         if (team[i].role == 'Manager'){
             card += '<img src ="./assets/images/manager.jpg"> <h2> ' + team[i].role + '</h2> </div>';
-            card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> Phone:" + team[i].phone + "</li></ul></div>";
+            card += '<div class = "card-body"<ul><li> Id:' + team[i].id +"</li><li>Email:" + team[i].email + "</li><li> Phone:" + team[i].number + "</li></ul></div>";
 
         }else if (team[i].role == 'Engineer'){
             card += '<img src ="./assets/images/engineer.jpg"> <h2> ' + team[i].role + '</h2> </div>';
-            card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> Github:" + team[i].github + "</li></ul></div>";
+            console.log(team);
+            card += '<div class = "card-body"<ul><li> Id:' + team[i].id +"</li><li> Email:" + team[i].email + "</li><li> Github:" + team[i].github + "</li></ul></div>";
         }
         else if ( team[i].role == 'Intern'){
             card += '<img src ="./assets/images/intern.jpg"> <h2> ' + team[i].role + '</h2> </div>';
-            card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> School:" + team[i].phone + "</li></ul></div>";
+            card += '<div class = "card-body"<ul><li> Id:' + team[i].id +"</li><li>Email:" + team[i].email + "</li><li> School:" + team[i].school + "</li></ul></div>";
 
         }
         thestring += card;
