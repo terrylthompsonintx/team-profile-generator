@@ -32,6 +32,10 @@ var engineerObj = {};
 var internObj = {};
 var aManager = {}
 
+var htmlhead  = fs.readFileSync('./dist/head.txt', "utf8");
+var htmlend  = fs.readFileSync('./dist/end.txt', "utf8");
+//console.log (htmlhead);
+
 const promptUser = function(){
     var employeeData = inquirer.prompt([
         { 
@@ -141,7 +145,28 @@ const promptIntern = function(){
 }
 
 const paint = function(){
-    
+    let card = '';
+    var thestring = htmlhead;
+    for (i=0;i<team.length;i++){
+        card += '<div class= "card"><div class="card-header"> <h1>' + team[i].name +'</h1>';
+        if (team[i].role == 'Manager'){
+            card += '<img src ="./assets/images/manager.jpg"> <h2> ' + team[i].role + '</h2> </div>';
+            card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> Phone:" + team[i].phone + "</li></ul></div>";
+
+        }else if (team[i].role == 'Engineer'){
+            card += '<img src ="./assets/images/engineerr.jpg"> <h2> ' + team[i].role + '</h2> </div>';
+            card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> Github:" + team[i].github + "</li></ul></div>";
+        }
+        else if ( team[i].role == 'Intern'){
+            card += '<img src ="./assets/images/intern.jpg"> <h2> ' + team[i].role + '</h2> </div>';
+            card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> School:" + team[i].phone + "</li></ul></div>";
+
+        }
+        thestring += card;
+    }
+    thestring += htmlend;
+
+    fs.writeFile('./src/index.html',thestring, err =>{if (err) throw err;}) 
 }
 
 promptUser()
@@ -150,7 +175,7 @@ promptUser()
         promptManager().then(function(mdata){
             aManager = new Manager(data.name,data.eId,data.email, mdata.phone);
             team.push(aManager)
-        }).then(function(){})
+        }).then(function(){paint()})
         
     }
     else if (data.role ==='Engineer'){
