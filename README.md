@@ -1,5 +1,5 @@
 
-  ![CCO Logo](./assets/images/gpl.png)
+ 
   # Team Profile Generator
   ### Table of Contents
   1. [Program Description.](#program-description)
