@@ -145,16 +145,17 @@ const promptIntern = function(){
 }
 
 const paint = function(){
+    console.log ( team);
     let card = '';
     var thestring = htmlhead;
     for (i=0;i<team.length;i++){
-        card += '<div class= "card"><div class="card-header"> <h1>' + team[i].name +'</h1>';
+        card += '<div class= "card" style = "width: 25%"><div class="card-header"> <h1>' + team[i].name +'</h1>';
         if (team[i].role == 'Manager'){
             card += '<img src ="./assets/images/manager.jpg"> <h2> ' + team[i].role + '</h2> </div>';
             card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> Phone:" + team[i].phone + "</li></ul></div>";
 
         }else if (team[i].role == 'Engineer'){
-            card += '<img src ="./assets/images/engineerr.jpg"> <h2> ' + team[i].role + '</h2> </div>';
+            card += '<img src ="./assets/images/engineer.jpg"> <h2> ' + team[i].role + '</h2> </div>';
             card += '<div class = "card-body"<ul><li> Id:' + team[i].eId +"</li><li>" + team[i].email + "</li><li> Github:" + team[i].github + "</li></ul></div>";
         }
         else if ( team[i].role == 'Intern'){
@@ -165,6 +166,7 @@ const paint = function(){
         thestring += card;
     }
     thestring += htmlend;
+    //console.log (thestring);
 
     fs.writeFile('./src/index.html',thestring, err =>{if (err) throw err;}) 
 }
@@ -173,22 +175,22 @@ promptUser()
 .then(function(data){
     if (data.role ==='Manager'){
         promptManager().then(function(mdata){
-            aManager = new Manager(data.name,data.eId,data.email, mdata.phone);
+            aManager = new Manager(data.eName,data.eId,data.email, 'Manager', mdata.phone);
             team.push(aManager)
         }).then(function(){paint()})
         
     }
     else if (data.role ==='Engineer'){
          promptEngineer().then(function(edata){
-            aEngineer = new Engineer(data.name,data.eId,data.email, edata.github);
+            aEngineer = new Engineer(data.eName,data.eId,data.email,'Engineer', edata.github);
             team.push(aEngineer)
-        }).then(function(){})
+        }).then(function(){paint()})
     }
     else if (data.role ==='Intern'){
         promptIntern().then(function(idata){
-            aIntern = new Intern(data.name,data.eId,data.email, idata.school);
+            aIntern = new Intern(data.eName,data.eId,data.email,'Intern', idata.school);
             team.push(aIntern)
-        }).then(function(){})
+        }).then(function(){paint()})
     }
 
 }).catch(function(err){console.log(err)});
