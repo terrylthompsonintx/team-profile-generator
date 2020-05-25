@@ -25,8 +25,8 @@ String is written to file.
 User message done.  
 */
 var team = [];
+var add = false;
 
-var aManager = {}
 
 var htmlhead  = fs.readFileSync('./dist/head.txt', "utf8");
 var htmlend  = fs.readFileSync('./dist/end.txt', "utf8");
@@ -152,7 +152,7 @@ const paint = function(){
 
         }else if (team[i].role == 'Engineer'){
             card += '<img src ="./assets/images/engineer.jpg"> <h2> ' + team[i].role + '</h2> </div>';
-            console.log(team);
+            
             card += '<div class = "card-body"<ul><li> Id:' + team[i].id +"</li><li> Email:" + team[i].email + "</li><li> Github:" + team[i].github + "</li></ul></div>";
         }
         else if ( team[i].role == 'Intern'){
@@ -173,21 +173,24 @@ promptUser()
     if (data.role ==='Manager'){
         promptManager().then(function(mdata){
             aManager = new Manager(data.eName,data.eId,data.email, 'Manager', mdata.phone);
-            team.push(aManager)
-        }).then(function(){paint()})
+            team.push(aManager);
+            //console.log(mdata);
+            add = mdata.loopconfirm;
+            
+        }).then(function(){if(add){promptUser()}}).then(function(){paint()});
         
     }
     else if (data.role ==='Engineer'){
          promptEngineer().then(function(edata){
             aEngineer = new Engineer(data.eName,data.eId,data.email,'Engineer', edata.github);
             team.push(aEngineer)
-        }).then(function(){paint()})
+        }).then(function(){if(add){promptUser()}}).then(function(){paint()});
     }
     else if (data.role ==='Intern'){
         promptIntern().then(function(idata){
             aIntern = new Intern(data.eName,data.eId,data.email,'Intern', idata.school);
             team.push(aIntern)
-        }).then(function(){paint()})
+        }).then(function(){if(add){promptUser()}}).then(function(){paint()});
     }
 
 }).catch(function(err){console.log(err)});
